@@ -1,10 +1,11 @@
-const carouselArray = Array.from(document.querySelectorAll('.carousel-item'))
-const nextSlideButton = document.querySelector('#nextSlide')
-const backSlideButton = document.querySelector('#backSlide')
-const circlesBlock = document.querySelector('.circles-container')
-const seconds = 10000
-let counter = 0
+const carouselArray = Array.from(document.querySelectorAll('.carousel-item')) //Массив слайдов
+const nextSlideButton = document.querySelector('#nextSlide')                  // Кнопка переключения слайда вперед
+const backSlideButton = document.querySelector('#backSlide')                  // Кнопка переключения слайда назад
+const circlesBlock = document.querySelector('.circles-container')             // Массив точек для доступа к конкретному слайду
+const seconds = 10000                                                         // Интервал смены слайда
+let counter = 0                                                               // Счетчик
 
+// Добавление точек в случае существования определенного блока с классом
 if (circlesBlock !== null) {
   for (let index = 0; index < carouselArray.length; index++) {
     circlesBlock.insertAdjacentHTML('beforeend', `<div class="circle" data-index="${index}"></div>`)
@@ -22,6 +23,7 @@ if (circlesBlock !== null) {
   })
 }
 
+// Функция обработки события нажатия на кнопку для переключения слайда вперед
 nextSlideButton.onclick = () => {
   counter++
   counter = carouselRepeater(counter)
@@ -32,6 +34,7 @@ nextSlideButton.onclick = () => {
   return counter
 }
 
+// Функция обработки события нажатия на кнопку для переключения слайда назад
 backSlideButton.onclick = () => {
   counter--
   counter = carouselRepeater(counter)
@@ -42,6 +45,7 @@ backSlideButton.onclick = () => {
   return counter
 }
 
+// Функция автоматического переключения слайдов
 setInterval(() => {
   counter++
   counter = carouselRepeater(counter)
@@ -51,7 +55,7 @@ setInterval(() => {
   }
 }, seconds);
 
-
+// Функция сброса счетчика
 function carouselRepeater(index) {
   if (index < 0) {
     index = carouselArray.length - 1
@@ -62,6 +66,7 @@ function carouselRepeater(index) {
   return index
 }
 
+// Функция выбора элемента
 function carouselElementSelection(index, nodesList) {
   nodesList.map(elem => elem.classList.remove('active'))
   nodesList[index].classList.add('active')
